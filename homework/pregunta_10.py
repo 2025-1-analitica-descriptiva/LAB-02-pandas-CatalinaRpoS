@@ -20,3 +20,14 @@ def pregunta_10():
     D                   1:2:3:5:5:7
     E   1:1:2:3:3:4:5:5:5:6:7:8:8:9
     """
+    import pandas as pd
+
+    df = pd.read_csv("files/input/tbl0.tsv", sep="\t")
+
+    df = df.rename(columns={"c1": "_c1"})
+    result = df.groupby("_c1")["c2"].apply(
+        lambda x: ":".join(map(str, sorted(x)))
+    ).reset_index()
+    result = result.set_index("_c1")
+    
+    return result
